@@ -1,0 +1,6 @@
+Dillema:
+1. performance/elegance trade-off for scientific computing
+	e.g. should I hide information and create things right where they are needed or pass them in?
+	current solution: 	if creating things are fast, go for elegance and create right where they are needed.
+			if creating things are expensive, pass them in.
+

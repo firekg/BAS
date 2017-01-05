@@ -1,0 +1,213 @@
+function plot_corr(CORR, CORR25)
+%% Plot SMboot--correlation (nominally Fig. 3)
+% updated on 2015-10-06
+
+figure(3);
+set(gcf,'Units','centimeters');
+set(gcf,'Toolbar','None');
+% set(gcf,'MenuBar','None');
+set(gcf,'Position',[1,2,20,20]);
+set(gcf, 'PaperSize', [20,20]);
+set(gcf, 'PaperPosition', [1,2,20,20]);
+
+%plot CORR
+pd=0.04; %distance between plots
+pws=0.18; %plot width
+phs=0.15; %plot height
+lm=0.08; %left margin
+ls1=lm; %1st column left start position
+ts1=0.70; %1st row top start position
+x=1:25;
+ticklen = 0.02;
+
+% CORR has 5 layers:
+% revealing number 25x: 1:25
+% moments x3: (mean, upper 95%, lower 95%)
+% pattern (mis)match 2x: same, different
+% conditions 3x: self-self, self-BAS, self-pnBAS
+% participants 4x: SC, EP, BZ, AVG
+ncond = 2;
+
+% for ii=4
+% for jj=1:ncond
+%     ls=ls1;
+%     ts=ts1-(jj-1)*phs-(jj-1)*pd;
+%     subplot('Position',[ls, ts, pws-pd/2, phs-pd/2]);    
+%     plot([0,30],[0,0],'-','Color',[0.0,0.0,0.0]); hold on;   %line on 0
+%     cl=[1.0,0.5,0.0];  
+%     plot(x,CORR(:,1,1,jj,ii),'-','Color',cl, 'MarkerFaceColor',cl);
+%     %plot(x,CORR(:,2,1,jj,ii),':','Color',cl, 'MarkerFaceColor',cl);
+%     %plot(x,CORR(:,3,1,jj,ii),':','Color',cl, 'MarkerFaceColor',cl);
+%     a_ErrorShade(x,CORR(:,2,1,jj,ii), CORR(:,3,1,jj,ii),cl,1);
+% 
+%     cl=[0.5,0.0,1.0];  
+%     plot(x,CORR(:,1,2,jj,ii),'-','Color',cl, 'MarkerFaceColor',cl);
+%     %plot(x,CORR(:,2,2,jj,ii),':','Color',cl, 'MarkerFaceColor',cl);
+%     %plot(x,CORR(:,3,2,jj,ii),':','Color',cl, 'MarkerFaceColor',cl);
+%     a_ErrorShade(x,CORR(:,2,2,jj,ii), CORR(:,3,2,jj,ii),cl,1);
+% 
+%     ylabel('Correlation');
+%     set(gca,'Ytick',-1:0.5:1,'YTickLabel',{'-1','','0','','1'}, 'TickLength',[ticklen,0]);    
+%     xlabel('Revealing number');
+%     set(gca,'Xtick',0:5:25,'XTickLabel',{'0','5','10','15','20','25'}, 'TickLength',[ticklen,0]);
+%     axis([5 25 -1 1]);  box off;  
+%     set(gca,'FontSize',10);
+% end
+% end
+
+% barplots of the 25th CORR
+pwd=0.02; %distance width between plots
+phd=0.04; %distance height between plots
+pws=0.08; %plot width
+phs=0.15; %plot height
+lm=0.08; %left margin
+ls1=0.3; %1st column left start position
+ts1=0.70; %1st row top start position
+for ii=1:4
+for jj=1:ncond
+    ls=ls1+(ii-1)*pws+(ii-1)*pwd;
+    ts=ts1-(jj-1)*phs-(jj-1)*phd;
+    subplot('Position',[ls, ts, pws-pwd/2, phs-phd/2]);
+    %same
+    cb=[1.0,0.5,0.0]; 
+    bar(1, CORR25(1,1,jj,ii), 'FaceColor', cb); hold on;    
+    plot([1,1],[CORR25(2,1,jj,ii),CORR25(3,1,jj,ii)],'k-','LineWidth',1);
+    %diff
+    cb=[0.5,0.0,1.0];
+    bar(2, CORR25(1,2,jj,ii), 'FaceColor', cb);
+    plot([2,2],[CORR25(2,2,jj,ii),CORR25(3,2,jj,ii)],'k-','LineWidth',1);
+    axis([0 3 -0.5 1.0]);  %axis square;  %grid on;
+    set(gca,'Ytick',-0.5:0.5:1,'YTickLabel',{'-0.5','0','0.5','1'}, 'TickLength',[ticklen,0]);    
+    set(gca,'Xtick',[],'box','off');
+end
+end
+
+set(gcf,'Color',[1,1,1]);
+
+% save figure
+% export_fig('Corr_deci.pdf')
+
+% ###########################################################
+% revealing-by-revealing plot
+figure(4);
+set(gcf,'Units','centimeters');
+set(gcf,'Toolbar','None');
+% set(gcf,'MenuBar','None');
+set(gcf,'Position',[1,2,20,20]);
+set(gcf, 'PaperSize', [20,20]);
+set(gcf, 'PaperPosition', [1,2,20,20]);
+
+pd=0.04; %distance between plots
+pws=0.18; %plot width
+phs=0.15; %plot height
+lm=0.08; %left margin
+ls1=lm; %1st column left start position
+ts1=0.75; %1st row top start position
+x=1:25;
+
+nparti = 4;
+for jj=1:nparti
+for ii=1:ncond
+    ls=ls1+(jj-1)*pws+(jj-1)*pd;
+    ts=ts1-(ii-1)*phs-(ii-1)*pd;
+    subplot('Position',[ls, ts, pws-pd/2, phs-pd/2]);
+    plot([0,30],[0,0],'-','Color',[0.0,0.0,0.0]); hold on;   %line on 0
+    cl=[1.0,0.5,0.0];  
+    plot(x,CORR(x,1,1,ii,jj),'-','Color',cl, 'MarkerFaceColor',cl);
+    %plot(x,CORR(:,2,1,jj,ii),':','Color',cl, 'MarkerFaceColor',cl);
+    %plot(x,CORR(:,3,1,jj,ii),':','Color',cl, 'MarkerFaceColor',cl);
+    a_ErrorShade(x,CORR(x,2,1,ii,jj), CORR(x,3,1,ii,jj),cl,1);
+
+    cl=[0.5,0.0,1.0];  
+    plot(x,CORR(x,1,2,ii,jj),'-','Color',cl, 'MarkerFaceColor',cl);
+    %plot(x,CORR(:,2,2,jj,ii),':','Color',cl, 'MarkerFaceColor',cl);
+    %plot(x,CORR(:,3,2,jj,ii),':','Color',cl, 'MarkerFaceColor',cl);
+    a_ErrorShade(x,CORR(x,2,2,ii,jj), CORR(x,3,2,ii,jj),cl,1);
+
+    ylabel('Correlation');
+    set(gca,'Ytick',-0.5:0.5:1,'YTickLabel',{'-0.5','0','0.5', '1'}, 'TickLength',[ticklen,0]);    
+    xlabel('Revealing number');
+    set(gca,'Xtick',0:5:25,'XTickLabel',{'0','5','10','15','20','25'}, 'TickLength',[ticklen,0]);
+    axis([1 25 -0.5 1.0]);  box off;  
+    set(gca,'FontSize',10);
+end
+end
+
+set(gcf,'Color',[1,1,1]);
+
+% save figure
+% export_fig('CorrParticipants_deci.pdf')
+
+
+end
+
+%% 2015-10-06
+% load in new dataset
+
+% CORR has 5 layers:
+% revealing number 25x: 1:25
+% moments x3: (mean, upper std, lower std)
+% pattern (mis)match 2x: same, different
+% conditions 3x: self-self, self-BAS, self-pnBAS
+% participants 4x: SC, EP, BZ, AVG
+
+% for parti=1:3
+%     for cond=1:2
+%         if cond==1
+%             eval(sprintf('load subj%iprBas1to25.mat',parti));
+%         elseif cond==2
+%             eval(sprintf('load subj%iprBas.mat',parti));
+%         end
+%         muw = mean(within,2);
+%         sdw = std(within,[],2);
+%         CORR(:,1,1,cond,parti) = muw;
+%         CORR(:,2,1,cond,parti) = muw+sdw;
+%         CORR(:,3,1,cond,parti) = muw-sdw;
+%         muw = mean(between,2);
+%         sdw = std(between,[],2);
+%         CORR(:,1,2,cond,parti) = muw;
+%         CORR(:,2,2,cond,parti) = muw+sdw;
+%         CORR(:,3,2,cond,parti) = muw-sdw;
+%     end
+% end
+
+% CORR25 has 4 layers:
+% moments x3: (mean, upper 95%, lower 95%)
+% pattern (mis)match 2x: same, different
+% conditions 3x: self-self, self-BAS, self-pnBAS
+% participants 4x: SC, EP, BZ, AVG                
+
+% CORR25 = zeros(3,2,2,4);
+% for parti=1:4
+%     for cond=1:2
+%         if cond==1
+%             eval(sprintf('load subj%iprRev25.mat',parti));
+%         elseif cond==2
+%             eval(sprintf('load subj%iprBasRev25.mat',parti));
+%         end
+%         within = sort(within);
+%         n = numel(within);
+%         CORR25(1,1,cond,parti) = mean(within);
+%         CORR25(2,1,cond,parti) = within(round(n*0.95));
+%         CORR25(3,1,cond,parti) = within(round(n*0.05));
+%         between = sort(between);
+%         n = numel(between);
+%         CORR25(1,2,cond,parti) = mean(between);
+%         CORR25(2,2,cond,parti) = between(round(n*0.95));
+%         CORR25(3,2,cond,parti) = between(round(n*0.05));
+%         disp(sprintf('Parti%d-cond%d same mean: %f.', parti, cond, mean(within)));
+%         disp(sprintf('Parti%d-cond%d diff mean: %f.', parti, cond, mean(between)));
+%         test = within<0;
+%         temp = sum(test);
+%         disp(sprintf('Parti%d-cond%d same: %f.', parti, cond, temp/1000));
+%         test = between>0;
+%         temp = sum(test);
+%         disp(sprintf('Parti%d-cond%d; diff: %f.', parti, cond, temp/1000));
+%         test = within>between;
+%         temp = sum(test);
+%         disp(sprintf('Parti%d-cond%d same>diff: %f.', parti, cond, temp/1000));
+%     end
+% end
+
+                
+                
