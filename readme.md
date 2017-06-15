@@ -7,7 +7,15 @@
 * The folder **correlation-shuffle** contains the latest correlation analysis.
 * The folder **exp-setup** contains some of the earliest code for setting up the experiment.
 
-## The Bayesian active sensing bits
+## The Bayesian active sensing core
 * **a_Get_BALDscoreProp.m** computes the BAS score map. Among other functions, it calls **a_Model.m** and **a_GetBALDGM_mex.c**.
 * **a_Model.m** computes type posteriors, gradients of parameters, and other stuff.
 * **a_GetBALDGM_mex.c** computes the BAS score of individual location.
+
+## Making Figure 3A in the paper (testing)
+* Run **BAS/analysis final/simu_BASs.m**. No input needed. Output is **SIM**.
+...Comment out lines 65-66. Uncomment lines 47, 49-50.
+* Run **BAS/analysis final/revmap_sim.m**. Input is **SIM**. Outputs are **[REV, RrevMap, RdrevMap]**.
+...Comment out lines 138-139, 142-172, 212. Uncomment lines 107-135, 210.
+...DRemovePhase(D) is introduced during the review process.
+* Run **BAS/analysis final/plot_rev_maps.m**. Inputs are **RrevMap, RdrevMap**. Output is Figure 3A.
