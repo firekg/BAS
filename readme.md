@@ -13,9 +13,12 @@
 * **a_GetBALDGM_mex.c** computes the BAS score of individual location.
 
 ## Making Figure 3A in the paper (testing)
-* Run **BAS/analysis final/simu_BASs.m**. No input needed. Output is **SIM**.
-...Comment out lines 65-66. Uncomment lines 47, 49-50.
-* Run **BAS/analysis final/revmap_sim.m**. Input is **SIM**. Outputs are **[REV, RrevMap, RdrevMap]**.
-...Comment out lines 138-139, 142-172, 212. Uncomment lines 107-135, 210.
-...DRemovePhase(D) is introduced during the review process.
-* Run **BAS/analysis final/plot_rev_maps.m**. Inputs are **RrevMap, RdrevMap**. Output is Figure 3A.
+* Run **BAS/analysis final/simu_BASs.m**.
+  * Comment out lines 65-66. Uncomment lines 47, 49-50.
+  * No input needed. Output is SIM.
+* Run **BAS/analysis final/revmap_sim.m**.
+  * Comment out lines 138-139, 142-172, 212. Uncomment lines 107-135, 210.
+  * DRemovePhase(D) is introduced during the review process.
+  * Input is SIM. Outputs are [REV, RrevMap, RdrevMap].
+* Run **BAS/analysis final/plot_rev_maps.m**.
+  * Inputs are RrevMap, RdrevMap. Output is Figure 3A.
