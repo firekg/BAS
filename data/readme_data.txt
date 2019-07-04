@@ -24,7 +24,11 @@ the true category of the underlying image
 
 ImageID:
 identifiers of the image used for each trial.
-What is more useful is the data on <https://archive.org/download/images_201907>.
+col 1: 1->patch; 2->stripy
+col 2: inverse length scale used in GP for x: 20->patch; 6->stripy horizontal; 30->stripy vertical
+col 3: inverse length scale used in GP for y
+col 4: an image id
+The actual images are in the data on <https://archive.org/download/images_201907>.
 This is a big MATLAB datafile (~13GB).
 These images are grouped into 6 structs named DIMBZAL, DIMBZPL, DIMEPAL, DIMEPPL, DIMSCAL, DIMSCPL to correspond to the BZAL, BZPL, EPAL, EPPL, SCAL, SCPL structs.
 The ith row in a struct is the underlying image (770x770 pixels) used in the ith trial.
